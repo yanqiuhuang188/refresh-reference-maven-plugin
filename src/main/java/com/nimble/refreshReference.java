@@ -25,22 +25,38 @@ public class refreshReference extends AbstractMojo {
             for (String item : paths) {
 
                 Path path = Paths.get(item);
-                if(Files.exists(path)){
+                if (Files.exists(path)) {
                     // Directory
                     if (Files.isDirectory(path)) {
                         FileUtils.deleteDirectory(path.toFile());
                     } else {
                         Files.deleteIfExists(path);
                     }
-                    System.out.println("Ok : " + path.toString() + " had delete !");
-                }else {
-                    System.out.println("Warn : " + path.toString() + " is not exist !");
+                    this.printLog("Ok : " + path.toString() + " had delete !");
+
+                } else {
+                    this.printLog("Warn : " + path.toString() + " is not exist !");
                 }
 
             }
         } catch (IOException e) {
-            System.out.println("Error, cause by " + e.getClass().getName());
+            this.printLog("Error, cause by " + e.getClass().getName());
             e.printStackTrace();
         }
+    }
+
+    private void printLog(String str) {
+        str = "****  " + str + "   ****";
+
+        StringBuffer sb = new StringBuffer();
+        for (int index = 0; index <= str.length(); index++) {
+            sb.append("*");
+        }
+
+        System.out.println();
+        System.out.println(sb.toString());
+        System.out.println(str);
+        System.out.println(sb.toString());
+        System.out.println();
     }
 }
